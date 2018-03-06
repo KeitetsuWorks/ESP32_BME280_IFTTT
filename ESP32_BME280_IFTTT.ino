@@ -57,12 +57,12 @@ void setup()
     Serial.println();
     bool bmeStatus = bme.begin();
     if (!bmeStatus) {
-        Serial.println("Failed to detect the BME280 sensor.");
+        Serial.println("Failed to detect BME280 sensor.");
         
         Serial.println("Restarting ...");
         ESP.restart();
     }
-    Serial.println("The BME280 sensor was detected.");
+    Serial.println("BME280 sensor was detected.");
     delay(1000);
     
     digitalWrite(PIN_LED, HIGH);
@@ -113,6 +113,7 @@ void loop()
     float bmeTemperature;
     float bmeHumidity;
     float bmePressure;
+    bool bmeResult;
     struct tm timeInfo;
     
     while (1) {
@@ -148,9 +149,14 @@ void loop()
             }
         }
         
-        bmeTemperature = bme.readTemperature();
-        bmeHumidity = bme.readHumidity();
-        bmePressure = bme.readPressure();
+        bmeResult = readBME280Values(&bmeTemperature, &bmeHumidity, &bmePressure);
+        if (!bmeResult) {
+            Serial.println("Failed to read values from BME280 sensor.");
+            
+            Serial.println("Restarting ...");
+            ESP.restart();
+        }
+        
         getLocalTime(&timeInfo);
         
         Serial.println();
@@ -162,7 +168,7 @@ void loop()
             sendRequestToIFTTT(
                 String(bmeTemperature),
                 String(bmeHumidity),
-                String(bmePressure / 100.0F)
+                String(bmePressure)
             );
             
             break;
@@ -181,6 +187,42 @@ void loop()
 }
 
 
+bool readBME280Values(float *bmeTemperature, float *bmeHumidity, float *bmePressure)
+{
+    float bmeTemperatureTemp;
+    float bmeHumidityTemp;
+    float bmePressureTemp;
+    bool result;
+    
+    result = false;
+    
+    int count = 0;
+    while (1) {
+        bmeTemperatureTemp = bme.readTemperature();
+        bmeHumidityTemp = bme.readHumidity();
+        bmePressureTemp = bme.readPressure() / 100.0F;
+        
+        if ((bmeTemperatureTemp > -100.0F) && (bmePressureTemp < 1100.0F)) {
+            *bmeTemperature = bmeTemperatureTemp;
+            *bmeHumidity = bmeHumidityTemp;
+            *bmePressure = bmePressureTemp;
+            result = true;
+            
+            break;
+        }
+        
+        count++;
+        if (count > 5) {
+            break;
+        }
+        
+        delay(1000);
+    }
+    
+    return result;
+}
+
+
 void printBME280Values(float bmeTemperature, float bmeHumidity, float bmePressure)
 {
     Serial.print("Temperature = ");
@@ -192,7 +234,7 @@ void printBME280Values(float bmeTemperature, float bmeHumidity, float bmePressur
     Serial.println(" %");
 
     Serial.print("Pressure = ");
-    Serial.print(bmePressure / 100.0F);
+    Serial.print(bmePressure);
     Serial.println(" hPa");
 
     return;

@@ -3,8 +3,8 @@ IoT Device for Sending the Meteorological Data to IFTTT Maker Webhooks Service u
 
 ## Description
 
-This repository includes Arduino sketch of IoT Device for sending temperature, humidity and atmospheric pressure to IFTTT maker webhooks service from ESP-WROOM-32.
-The meteorogical data are measured by the Bosch Sensortec BME280 interfaced with the I2C bus.
+This repository includes the Arduino sketch of the IoT Device for sending temperature, humidity and atmospheric pressure to IFTTT maker webhooks service from ESP-WROOM-32.
+The meteorogical data are measured by Bosch Sensortec BME280 interfaced with the I2C bus.
 The sending processing to IFTTT are performed every 10 minites based on local time synchronized with the NTP server.
 Untill next sending precessing, ESP-WROOM-32 will go to deep sleep mode for power saving.
 
