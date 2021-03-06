@@ -15,7 +15,7 @@
 /**
  * @name    IFTTT Configuration
  */
-/*! @{ */
+/** @{ */
 /**
  * @def     Maker Webhooks Service Event Name
  */
@@ -25,6 +25,6 @@
  * @def     Maker Webhooks Service Key
  */
 #define MAKER_KEY       "{secret key}"
-/*! @} */
+/** @} */
 
 #endif  /* __IFTTT_CONFIG_H__ */

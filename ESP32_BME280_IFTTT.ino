@@ -19,9 +19,9 @@
 /**
  * @name    Pin Assignments
  */
-/*! @{ */
-#define PIN_LED         2       /*!< Green LED */
-/*! @} */
+/** @{ */
+#define PIN_LED         2       /**< Green LED */
+/** @} */
 
 /**
  * @def     Time ESP32 will go to sleep (in micro seconds)
@@ -37,10 +37,10 @@ Adafruit_BME280 bme;
 /**
  * @name    Wi-Fi Configuration
  */
-/*! @{ */
+/** @{ */
 const char *ssid = WIFI_SSID;
 const char *password = WIFI_PASSWORD;
-/*! @} */
+/** @} */
 
 
 void setup()

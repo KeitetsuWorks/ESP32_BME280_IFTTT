@@ -16,11 +16,11 @@
 /**
  * @name    IFTTT Configuration
  */
-/*! @{ */
+/** @{ */
 const char *iftttHost = "maker.ifttt.com";
 String makerEvent = MAKER_EVENT;
 String makerKey = MAKER_KEY;
-/*! @} */
+/** @} */
 
 WiFiClient client;
 

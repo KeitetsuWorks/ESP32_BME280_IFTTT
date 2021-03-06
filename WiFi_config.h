@@ -15,7 +15,7 @@
 /**
  * @name    Wi-Fi Configuration
  */
-/*! @{ */
+/** @{ */
 /**
  * @def     SSID
  */
@@ -25,6 +25,6 @@
  * @def     Password
  */
 #define WIFI_PASSWORD   "{password}"
-/*! @} */
+/** @} */
 
 #endif  /* __WIFI_CONFIG_H__ */
